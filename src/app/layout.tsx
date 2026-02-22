@@ -134,7 +134,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function NavItem({ href, icon, text, isActive = false, onClick }: any) {
+// INTERFACES
+interface NavItemProps {
+  href: string;
+  icon: React.ReactNode;
+  text: string;
+  isActive?: boolean;
+  onClick?: () => void;
+}
+
+interface Particle {
+  id: number;
+  tx?: string;
+  ty?: string;
+  left?: string;
+  duration: string;
+  isCyan: boolean;
+  size: string;
+  delay?: string;
+}
+
+// LIENS DU MENU
+function NavItem({ href, icon, text, isActive = false, onClick }: NavItemProps) {
   return (
     <Link 
       href={href} 
@@ -157,7 +178,7 @@ function NavItem({ href, icon, text, isActive = false, onClick }: any) {
 }
 
 function PixieDust() {
-  const [particles, setParticles] = useState<any[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     const newParticles = Array.from({ length: 35 }).map((_, i) => {
@@ -199,7 +220,7 @@ function PixieDust() {
 }
 
 function RisingParticles() {
-  const [particles, setParticles] = useState<any[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     const newParticles = Array.from({ length: 40 }).map((_, i) => {

@@ -279,15 +279,41 @@ export default function Home() {
   );
 }
 
+// INTERFACES
+interface ProjectType {
+  title: string;
+  date: string;
+  desc: string;
+  tags: string[];
+  icon: React.ReactNode;
+  github: string | null;
+}
+
+interface Particle {
+  id: number;
+  left: string;
+  size: string;
+  duration: string;
+  delay: string;
+  isCyan: boolean;
+}
+
+interface TimelineItemProps {
+  title: string;
+  institution: string;
+  date: string;
+  grade: string;
+  children: React.ReactNode;
+  align: "left" | "right";
+}
+
 // ============================================================================
 // SOUS-COMPOSANTS LOGIQUES & VISUELS
 // ============================================================================
 
-// --- LE CARROUSEL COVERFLOW ---
-function ProjectCarousel({ projects }: { projects: any[] }) {
+// LE CARROUSEL COVERFLOW
+function ProjectCarousel({ projects }: { projects: ProjectType[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  
-  // On regarde l'index de la carte actuellement au centre
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleScroll = () => {
@@ -298,7 +324,6 @@ function ProjectCarousel({ projects }: { projects: any[] }) {
     let closestIndex = 0;
     let closestDistance = Infinity;
 
-    // On regarde chaque carte pour voir laquelle est la plus proche du centre
     Array.from(container.children).forEach((child, index) => {
       const childElement = child as HTMLElement;
       const childCenter = childElement.offsetLeft + childElement.clientWidth / 2;
@@ -314,14 +339,13 @@ function ProjectCarousel({ projects }: { projects: any[] }) {
   };
 
   useEffect(() => {
-    handleScroll(); // Vérification initiale
+    handleScroll();
     window.addEventListener('resize', handleScroll);
     return () => window.removeEventListener('resize', handleScroll);
   }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      // Largeur de défilement : taille d'une carte + son espace gap
       const scrollAmount = window.innerWidth > 768 ? 732 : window.innerWidth * 0.85 + 24;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
@@ -332,24 +356,19 @@ function ProjectCarousel({ projects }: { projects: any[] }) {
 
   return (
     <div className="w-full relative group">
-      
-      {/* BOUTON PRÉCÉDENT */}
       <button 
         onClick={() => scroll("left")}
-        // Si la carte active est la première alors on va cacher la flèche
         className={`absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-40 p-3 md:p-4 bg-[#0a0a0a]/80 border border-[#00fafe]/50 text-[#00fafe] rounded-full backdrop-blur-md transition-all duration-300 hover:bg-[#00fafe]/20 hover:shadow-[0_0_15px_rgba(0,250,254,0.6)] hidden md:flex items-center justify-center cursor-pointer ${
           activeIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover:opacity-100'
         }`}
-        title="Previous project"
+        title="Projet précédent"
       >
         <FaChevronLeft size={24} />
       </button>
 
-      {/* CONTENEUR CARROUSEL */}
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
-        // Le padding calcule la bonne marge pour centrer la carte
         className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-16 pt-8 px-[7.5vw] md:px-[calc(50vw-350px)] no-scrollbar items-stretch"
       >
         {projects.map((proj, idx) => (
@@ -357,14 +376,12 @@ function ProjectCarousel({ projects }: { projects: any[] }) {
         ))}
       </div>
 
-      {/* BOUTON SUIVANT */}
       <button 
         onClick={() => scroll("right")}
-        // Si la carte active est la dernière alors on va cacher la flèche
         className={`absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-40 p-3 md:p-4 bg-[#0a0a0a]/80 border border-[#b366ff]/50 text-[#b366ff] rounded-full backdrop-blur-md transition-all duration-300 hover:bg-[#b366ff]/20 hover:shadow-[0_0_15px_rgba(179,102,255,0.6)] hidden md:flex items-center justify-center cursor-pointer ${
           activeIndex === projects.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover:opacity-100'
         }`}
-        title="Next project"
+        title="Projet suivant"
       >
         <FaChevronRight size={24} />
       </button>
@@ -373,7 +390,7 @@ function ProjectCarousel({ projects }: { projects: any[] }) {
 }
 
 // LA CARTE INDIVIDUELLE
-function ProjectCard({ project, isActive }: { project: any, isActive: boolean }) {
+function ProjectCard({ project, isActive }: { project: ProjectType, isActive: boolean }) {
   return (
     <div 
       className={`snap-center shrink-0 w-[85vw] md:w-[700px] transition-all duration-700 ease-out flex ${
@@ -384,12 +401,10 @@ function ProjectCard({ project, isActive }: { project: any, isActive: boolean })
     >
       <GlowCard className="p-6 md:p-8 w-full flex flex-col h-full">
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch h-full">
-          
           <div className="w-full md:w-1/3 min-h-[160px] md:min-h-[200px] shrink-0 bg-[#1a1a1a] rounded-lg border border-[#333] flex items-center justify-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-[#00fafe]/10 group-hover:bg-transparent transition-colors z-10"></div>
             {project.icon}
           </div>
-          
           <div className="w-full md:w-2/3 flex flex-col flex-grow text-left">
             <div className="flex justify-between items-start gap-4 mb-4">
               <div className="flex items-center gap-4 flex-wrap">
@@ -406,11 +421,9 @@ function ProjectCard({ project, isActive }: { project: any, isActive: boolean })
                 {project.date}
               </span>
             </div>
-            
             <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
               {project.desc}
             </p>
-            
             <div className="flex flex-wrap gap-2 font-mono text-xs mt-auto">
               {project.tags.map((tag: string, i: number) => (
                 <span key={i} className="text-[#b366ff] bg-[#b366ff]/10 px-2 py-1 rounded-sm border border-[#b366ff]/20">
@@ -419,7 +432,6 @@ function ProjectCard({ project, isActive }: { project: any, isActive: boolean })
               ))}
             </div>
           </div>
-
         </div>
       </GlowCard>
     </div>
@@ -436,8 +448,6 @@ function InteractiveTimeline({ children }: { children: React.ReactNode }) {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-
-      // Calcule à quel point le conteneur a été parcouru par le défilement
       const start = rect.top - windowHeight / 2;
       const max = rect.height;
 
@@ -455,15 +465,11 @@ function InteractiveTimeline({ children }: { children: React.ReactNode }) {
 
   return (
     <div ref={containerRef} className="relative max-w-4xl mx-auto mt-16 py-10">
-      {/* Ligne éteinte (en fond) */}
       <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gray-800 md:-translate-x-1/2 z-0"></div>
-      
-      {/* Ligne d'énergie (allumée, dont la hauteur se met à jour au scroll) */}
       <div
         className="absolute left-6 md:left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#b366ff] to-[#00fafe] shadow-[0_0_15px_#00fafe] md:-translate-x-1/2 z-0 transition-all duration-100 ease-out"
         style={{ height: `${progress}px` }}
       ></div>
-
       <div className="space-y-12 relative z-10">
         {children}
       </div>
@@ -472,34 +478,31 @@ function InteractiveTimeline({ children }: { children: React.ReactNode }) {
 }
 
 // ÉLÉMENT DE LA TIMELINE 
-function TimelineItem({ title, institution, date, grade, children, align }: any) {
+function TimelineItem({ title, institution, date, grade, children, align }: TimelineItemProps) {
   const isLeft = align === "left";
   const [isActive, setIsActive] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Le point s'allume quand il arrive au milieu de l'écran
+    const currentRef = domRef.current;
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) setIsActive(true);
       });
     }, { threshold: 0.5, rootMargin: "-100px 0px -100px 0px" });
 
-    if (domRef.current) observer.observe(domRef.current);
-    return () => { if (domRef.current) observer.unobserve(domRef.current); };
+    if (currentRef) observer.observe(currentRef);
+    return () => { if (currentRef) observer.unobserve(currentRef); };
   }, []);
 
   return (
     <div ref={domRef} className={`relative flex flex-col md:flex-row items-center justify-between w-full ${isLeft ? 'md:flex-row-reverse' : ''}`}>
       <div className="hidden md:block w-5/12"></div>
-      
       <div className={`absolute left-6 md:left-1/2 w-4 h-4 rounded-full border-[3px] md:-translate-x-1/2 mt-6 md:mt-0 z-10 transition-all duration-700 ${
         isActive 
           ? 'bg-[#0a0a0a] border-[#00fafe] shadow-[0_0_15px_rgba(0,250,254,0.8)] scale-125' 
           : 'bg-gray-900 border-gray-700 scale-100'
       }`}></div>
-      
-      {/* La carte fait une petite translation et s'affiche quand elle s'active */}
       <div className={`w-full pl-14 md:pl-0 md:w-5/12 transition-all duration-700 delay-300 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <GlowCard className="p-6">
           <h3 className="text-xl font-bold text-white mb-1 group-hover:text-[#00fafe] transition-colors">{title}</h3>
@@ -541,7 +544,9 @@ function TerminalContact() {
         setStatus("error"); setTimeout(() => setStatus("idle"), 5000);
       }
     } catch (error) {
-      setStatus("error"); setTimeout(() => setStatus("idle"), 5000);
+      console.error(error);
+      setStatus("error"); 
+      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
@@ -564,7 +569,8 @@ function TerminalContact() {
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={status === "loading"} placeholder="your@email.com" required className="flex-1 bg-transparent border-b border-[#333] focus:border-[#00fafe] outline-none text-white px-2 py-1 placeholder:text-gray-700 transition-colors disabled:opacity-50" />
           </div>
           <div className="flex flex-col gap-2">
-            <div><span className="text-[#00fafe]">guest@recruiter:~$</span><span className="text-[#b366ff]"> echo</span> "Message" <span className="text-[#00fafe]">&gt;</span> transmission.txt</div>
+            {/* Correction des guillemets */}
+            <div><span className="text-[#00fafe]">guest@recruiter:~$</span><span className="text-[#b366ff]"> echo</span> &quot;Message&quot; <span className="text-[#00fafe]">&gt;</span> transmission.txt</div>
             <textarea rows={3} value={message} onChange={(e) => setMessage(e.target.value)} disabled={status === "loading"} placeholder="Type your message here..." required className="w-full bg-black/50 border border-[#333] focus:border-[#b366ff] outline-none text-white p-3 rounded resize-none placeholder:text-gray-700 transition-colors disabled:opacity-50" />
           </div>
           <div className="pt-4 flex items-center gap-4">
@@ -581,7 +587,7 @@ function TerminalContact() {
 }
 
 function FooterParticles() {
-  const [particles, setParticles] = useState<any[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
   useEffect(() => {
     const newParticles = Array.from({ length: 60 }).map((_, i) => {
       const left = Math.random() * 100 + '%'; const size = Math.random() * 2 + 1 + 'px';
@@ -603,8 +609,9 @@ function ScrollReveal({ children }: { children: React.ReactNode }) {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const currentRef = domRef.current;
     const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) setIsVisible(true); }); }, { threshold: 0.15 }); 
-    const currentRef = domRef.current; if (currentRef) observer.observe(currentRef);
+    if (currentRef) observer.observe(currentRef);
     return () => { if (currentRef) observer.unobserve(currentRef); };
   }, []);
   return (<div ref={domRef} className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>{children}</div>);
@@ -612,13 +619,13 @@ function ScrollReveal({ children }: { children: React.ReactNode }) {
 
 function GlowCard({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
   return (
-    <div onMouseMove={handleMouseMove} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className={`relative neon-glass-card rounded-xl group overflow-hidden ${className}`}>
+    <div onMouseMove={handleMouseMove} className={`relative neon-glass-card rounded-xl group overflow-hidden ${className}`}>
       <div className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" style={{ background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 250, 254, 0.15), transparent 40%)` }} />
       <div className="relative z-10 h-full">{children}</div>
     </div>
