@@ -219,6 +219,10 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2"><FaCode className="text-[#00fafe]" /> Communication</h3>
                   <div className="space-y-6">
                     <div>
+                      <div className="flex justify-between text-sm font-mono mb-2"><span className="text-[#b366ff]">French (native)</span><span className="text-gray-400">100%</span></div>
+                      <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-[#b366ff] shadow-[0_0_10px_#b366ff]" style={{ width: '100%' }}></div></div>
+                    </div>
+                    <div>
                       <div className="flex justify-between text-sm font-mono mb-2"><span className="text-[#00fafe]">English (B2)</span><span className="text-gray-400">80%</span></div>
                       <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-[#00fafe] shadow-[0_0_10px_#00fafe]" style={{ width: '80%' }}></div></div>
                     </div>
@@ -377,7 +381,8 @@ function ProjectCarousel({ projects }: { projects: ProjectType[] }) {
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-16 pt-8 px-[7.5vw] md:px-[calc(50vw-350px)] no-scrollbar items-stretch"
+        // flex-col sur mobile, et flex-row + overflow-x-auto sur md:
+        className="flex flex-col md:flex-row md:overflow-x-auto md:snap-x md:snap-mandatory gap-8 pb-12 md:pb-16 pt-4 md:pt-8 px-[5vw] md:px-[calc(50vw-350px)] no-scrollbar items-center md:items-stretch"
       >
         {projects.map((proj, idx) => (
           <ProjectCard key={idx} project={proj} isActive={activeIndex === idx} />
@@ -401,11 +406,14 @@ function ProjectCarousel({ projects }: { projects: ProjectType[] }) {
 function ProjectCard({ project, isActive }: { project: ProjectType, isActive: boolean }) {
   return (
     <div 
-      className={`snap-center shrink-0 w-[85vw] md:w-[700px] transition-all duration-700 ease-out flex ${
-        isActive 
-          ? 'scale-100 opacity-100 blur-0 shadow-[0_0_30px_rgba(179,102,255,0.2)]' 
-          : 'scale-90 opacity-40 blur-[2px]'
-      }`}
+      // Les effets de flou et réduction sont désactivés sur mobile
+      className={`w-full max-w-[90vw] md:max-w-none md:w-[700px] md:snap-center md:shrink-0 transition-all duration-700 ease-out flex 
+        scale-100 opacity-100 blur-0 shadow-lg md:shadow-none
+        ${isActive 
+          ? 'md:scale-100 md:opacity-100 md:blur-0 md:shadow-[0_0_30px_rgba(179,102,255,0.2)]' 
+          : 'md:scale-90 md:opacity-40 md:blur-[2px]'
+        }
+      `}
     >
       <GlowCard className="p-6 md:p-8 w-full flex flex-col h-full">
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch h-full">
