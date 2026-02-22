@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+:root {
+  /* Le fond deep void */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  
+  /* Couleurs néon */
+  --neon-purple: #b366ff;
+  --neon-cyan: #00fafe;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* NEON-GLASS */
+
+/* Lueur violette */
+.glow-purple {
+  text-shadow: 0 0 10px rgba(179, 102, 255, 0.7), 0 0 20px rgba(179, 102, 255, 0.4);
+}
+.box-glow-purple {
+  box-shadow: 0 0 15px rgba(179, 102, 255, 0.2), inset 0 0 10px rgba(179, 102, 255, 0.1);
+}
+
+/* Lueur cyan */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 250, 254, 0.7), 0 0 20px rgba(0, 250, 254, 0.4);
+}
+.box-glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 250, 254, 0.2), inset 0 0 10px rgba(0, 250, 254, 0.1);
+}
+
+/* Effet glassmorphism (verre néon) */
+.neon-glass-card {
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(179, 102, 255, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+.neon-glass-card:hover {
+  border-color: rgba(0, 250, 254, 0.5);
+  box-shadow: 0 0 20px rgba(0, 250, 254, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Animation de rotation pour l'effet de lumière */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 4s linear infinite; /* 4s pour que le tour soit complet */
+}
+
+/* ANIMATIONS POUR LES FRAGMENTS FLOTTANTS */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(15deg); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(-15deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+}
+
+/* ANIMATION D'ARRIÈRE-PLAN SPATIAL */
+
+/* Défilement diagonal lent */
+@keyframes move-space {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    /* On déplace le fond de 1000px en diagonale */
+    background-position: 1000px 500px; 
+  }
+}
+
+.animate-space-drift {
+  animation: move-space 120s linear infinite;
+}
+
+/* ANIMATION POUSSIÈRE DE FÉE (PIXIE DUST) */
+@keyframes pixie-sparkle {
+  0% { 
+    opacity: 0; 
+    transform: translate(0, 0) scale(0); 
+  }
+  20% { 
+    opacity: 1; 
+    transform: translate(calc(var(--tx) * 0.2), calc(var(--ty) * 0.2)) scale(1); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: translate(var(--tx), var(--ty)) scale(0); 
+  }
+}
+
+.animate-pixie {
+  animation: pixie-sparkle ease-out forwards;
+}
+
+/* ANIMATION PARTICULES MONTANTES */
+@keyframes rise-up {
+  0% {
+    transform: translateY(10px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-150px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.animate-rise {
+  animation: rise-up linear infinite;
+}
+
+/* ANIMATION MACHINE À ÉCRIRE */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #00fafe }
+}
+
+.typewriter-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #00fafe;
+  animation: 
+    typing 2s steps(30, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+/* ANIMATION GALAXIE AU CENTRE */
+@keyframes galaxy-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.animate-galaxy {
+  animation: galaxy-spin 120s linear infinite;
+}
+
+/* ANIMATION LOADER */
+@keyframes loader-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-loader {
+  animation: loader-slide 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* UTILITAIRE POUR LE CARROUSEL */
+/* Masque la barre de défilement horizontale mais garde le scroll actif */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;  /* Firefox */
+}
