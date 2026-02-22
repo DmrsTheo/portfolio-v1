@@ -100,9 +100,17 @@ export default function Home() {
                   Hi, I'm <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b366ff] to-[#00fafe] glow-purple pb-2 block mt-2 leading-[1.1]">Théo <br /> De Morais</span>
                 </h1>
-                <p className="text-xl text-gray-400 font-light max-w-lg border-l-2 border-[#b366ff] pl-4">
-                  Computer Science Engineering student (Master's level) with 2 years of Full Stack experience at the French Ministry of Justice.
-                </p>
+                <div className="text-lg md:text-xl text-gray-400 font-light max-w-xl border-l-2 border-[#b366ff] pl-4 space-y-3">
+                  <p>
+                    🎓 Computer Science Engineering student (Master&apos;s level).
+                  </p>
+                  <p>
+                    💼 Currently <strong>Full Stack Apprentice</strong> at the French Ministry of Justice.
+                  </p>
+                  <p>
+                    🚀 Upcoming <strong>Software Engineer Intern</strong> at Natixis (Porto).
+                  </p>
+                </div>
                 <div className="pt-8 flex items-center justify-center md:justify-start gap-6">
                   <a href="/CV_Theo_De_Morais.pdf" download="CV_Theo_De_Morais.pdf" className="group relative px-6 py-3 font-mono font-bold tracking-widest text-white uppercase border border-[#b366ff]/50 bg-[#b366ff]/10 hover:bg-[#b366ff]/20 transition-all rounded overflow-hidden flex items-center gap-3">
                     <span className="relative z-10 flex items-center gap-2"><FaDownload className="text-[#00fafe] group-hover:animate-bounce" /> Resume</span>
@@ -215,8 +223,8 @@ export default function Home() {
                       <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-[#00fafe] shadow-[0_0_10px_#00fafe]" style={{ width: '80%' }}></div></div>
                     </div>
                     <div>
-                      <div className="flex justify-between text-sm font-mono mb-2"><span className="text-[#b366ff]">Portuguese (B1)</span><span className="text-gray-400">60%</span></div>
-                      <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-[#b366ff] shadow-[0_0_10px_#b366ff]" style={{ width: '60%' }}></div></div>
+                      <div className="flex justify-between text-sm font-mono mb-2"><span className="text-[#b366ff]">Portuguese (B2)</span><span className="text-gray-400">80%</span></div>
+                      <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden"><div className="h-full bg-[#b366ff] shadow-[0_0_10px_#b366ff]" style={{ width: '80%' }}></div></div>
                     </div>
                   </div>
                 </GlowCard>
@@ -249,9 +257,9 @@ export default function Home() {
             <div className="relative z-10 text-center space-y-4">
               <div className="text-center">
                 <h2 className="text-2xl font-bold tracking-widest text-white mb-2"><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b366ff] to-[#00fafe] glow-purple">Théo De Morais</span></h2>
-                <p className="text-gray-400 font-mono text-sm">Full Stack Software Engineer</p>
+                <p className="text-gray-400 font-mono text-sm">Software Engineer</p>
               </div>
-              <div className="flex justify-center gap-8 text-sm font-mono text-gray-400">
+              <div className="flex justify-center space-x-8 text-sm font-mono text-gray-400">
                 <a href="#home" className="hover:text-[#00fafe] transition-colors">Home</a>
                 <a href="#projects" className="hover:text-[#00fafe] transition-colors">Projects</a>
                 <a href="#contact" className="hover:text-[#00fafe] transition-colors">Contact</a>

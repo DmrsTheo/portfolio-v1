@@ -46,8 +46,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className="scroll-smooth">
+
       <body className="bg-[#0f0c29] text-white min-h-screen font-sans cursor-none">
-        
+        <title>Théo De Morais</title>
+        <meta name="description" content="Portfolio of Théo De Morais, Full Stack Software Engineer." />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>" />
         <button 
           onClick={toggleMenu}
           className="fixed top-6 left-6 z-40 p-3 bg-[#151030]/80 backdrop-blur-md rounded-xl text-cyan-400 hover:text-white border border-cyan-500/30 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all"
@@ -92,7 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <h2 className="text-2xl font-bold mb-1 tracking-wider">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-400">Théo</span>
             </h2>
-            <p className="text-[10px] text-gray-400 tracking-[0.2em]">SOFTWARE ENGINEERING</p>
+            <p className="text-[10px] text-gray-400 tracking-[0.2em]">SOFTWARE ENGINEER</p>
           </div>
 
           <div className="flex-1 overflow-y-auto w-full space-y-2 mt-4 relative z-10">
