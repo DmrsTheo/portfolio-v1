@@ -41,6 +41,10 @@ export default function Home() {
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    fetch('/api/visit').catch(console.error);
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000);
 
     const handleScroll = () => setShowScrollTop(window.scrollY > 400);
